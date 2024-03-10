@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0; /* Remove default margin */
+            background-color: #f8f9fa; /* Set a light background color */
+        }
+
+        .form-floating {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-floating label {
+            color: green;
+        }
+
+        .form-floating input[type="text"],
+        .form-floating input[type="date"] {
+            border: 1px solid green;
+            border-radius: 5px;
+            color: green;
+        }
+
+        .form-floating input[type="text"]:focus,
+        .form-floating input[type="date"]:focus {
+            border-color: darkgreen;
+        }
+
+        .navbar {
+            background-color: green;
+            margin-bottom: 20px;
+        }
+
+        .navbar-text {
+            color: white;
+            margin-right: 20px;
+        }
+
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-item {
+            margin-top: 0px;
+            margin-right: 20px;
+        }
+
+        .nav-link {
+            color: white;
+        }
+
+        .nav-link:hover {
+            color: darkgreen;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .card {
+            border: 1px solid darkgreen;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .song-list,
+        .album-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .song-card,
+        .album-card {
+            background-color: lightgreen;
+            border: 1px solid darkgreen;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+
+        .song-title,
+        .album-title {
+            color: darkgreen;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .song-title:hover,
+        .album-title:hover {
+            text-decoration: underline;
+        }
+
+        .ratings {
+            color: darkgreen;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <span class="navbar-text">Creator Account</span>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for("upload_song")}}">Upload Song</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for("album")}}">Album</a>
+            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="{{url_for("user_dashboard")}}">User Account</a>
+            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for("logout")}}">Logout</a>
+            </li>
+        </ul>
+    </nav>
+    <form method="POST" action="{{ url_for('delete_album', album_id=album.id) }}">
+        <button type="submit" class="btn btn-danger mt-2">Delete Album</button>
+    </form>
+    
+    
+    <div class="container mt-4">
+        <h2>{{ album.name }}</h2>
+        <ul class="song-list">
+            {% for song in album.songs %}
+                <li>
+                    <div class="song-card">
+                        <a href="{{ url_for('lyrics', id=song.id) }}" class="song-title">{{ song.title }}</a>
+                        <a href="{{ url_for('remove_song_from_album', album_id=album.id, song_id=song.id) }}"
+                           class="btn btn-danger btn-sm float-right">Remove</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Add new songs to album section -->
+        <form method="POST" action="{{ url_for('add_songs_to_album', album_id=album.id) }}">
+            <div class="form-floating">
+                <select class="form-select" id="selected_songs" name="selected_songs[]" multiple>
+                    {% for song in available_songs %}
+                        <option value="{{ song.id }}">{{ song.title }}</option>
+                    {% endfor %}
+                </select>
+                <label for="selected_songs">Select Songs</label>
+            </div>
+            <button type="submit" class="btn btn-success">Add Songs</button>
+        </form>
+    </div>
+</body>
+
+</html>

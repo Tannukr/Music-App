@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music App</title>
+    <!-- Bootstrap CSS Link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray background color */
+        }
+
+        .navbar {
+            background-color: green;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .navbar-text,
+        .nav-link {
+            color: green; /* Use consistent color */
+        }
+
+        .navbar-text:hover,
+        .nav-link:hover {
+            color: darkgreen; /* Light blue text color on hover */
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: green;
+            margin-bottom: 20px;
+        }
+
+        .list-group-item {
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            margin-bottom: 10px;
+        }
+
+        .list-group-item:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .btn-primary {
+            background-color: green;
+            border-color: green;
+        }
+
+        .btn-primary:hover {
+            background-color: darkgreen;
+            border-color: darkgreen;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <span class="navbar-text">Creator Account</span>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('upload_song')}}">Upload Song</a>
+            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="{{url_for('user_dashboard')}}">User Account</a>
+            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for("logout")}}">Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="form-container">
+        <h2>Create a New Album</h2>
+        <form action="{{ url_for('album') }}" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="albumName" class="form-label">Enter Album Name</label>
+                <input type="text" class="form-control" id="albumName" name="albumName" placeholder="Name" required>
+
+            </div>
+
+            <div class="song-container">
+                {% for song in songs %}
+                    <p>
+                        <input type="checkbox" id="song{{ song.id }}" name="selected_songs[]" value="{{ song.id }}">
+                        <label for="song{{ song.id }}">{{ song.title }}</label>
+                    </p>
+                {% endfor %}
+                <input type="file" name="file" accept="image/*" required>
+            </div>
+             
+            <button type="submit" class="btn btn-primary">Create Album</button>
+        </form>
+    </div>
+    <!-- Add this form to the "album.html" template -->
+
+
+</body>
+
+</html>

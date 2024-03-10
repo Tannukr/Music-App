@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f2f2f2;
+            
+            background-repeat: no-repeat;
+            background-position: center center;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: green;
+            padding: 10px 0;
+        }
+
+        .navbar a {
+            color: #fff;
+        }
+
+        h4.welcome-message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+            color: black; /* Text color in the welcome message */
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4CAF50; /* Green color for links */
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        form {
+            margin-top: 10px;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        .song-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .song-card {
+            background-color: lightgreen;
+            border: 1px solid darkgreen;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+
+        .song-title {
+            color: darkgreen;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .song-title:hover {
+            text-decoration: underline;
+        }
+
+        .btn-danger.btn-sm,
+        .btn-success.btn-sm {
+            margin-top: 5px;
+        }
+
+        .form-floating {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <!-- <a class="nav-link active" aria-current="page" href='{{url_for('user_homepage')}}'>Profile</a>  -->
+                    <!-- <a class="nav-link active" aria-current="page" href="{{ url_for("user_dashboard") }}">Profile</a> -->
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href='{{url_for('creator_dashboard')}}'>Creator Account</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href='{{url_for('logout')}}'>Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href='{{url_for('user_homepage')}}'>Profile</a>
+                </li>
+            </ul>
+
+            <form action="{{ url_for('search') }}" method="GET"
+                class="form-inline my-2 my-lg-0 d-flex align-items-center">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="query">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <form method="POST" action="{{ url_for('delete_playlist', playlist_id=playlist.id) }}">
+        <button type="submit" class="btn btn-danger mt-2">Delete Playlist</button>
+    </form>
+
+    <h2>{{ playlist.name }}</h2>
+
+    {% if playlist_songs %}
+        
+        <ul class="song-list">
+            {% for song in playlist_songs %}
+                <li>
+                    <div class="song-card">
+                        <img src="{{ song.image_url }}" class="card-img-top" alt="Song Image">
+                        <a href="{{ url_for('lyrics', id=song.id) }}" class="song-title">{{ song.title }}</a>
+                        <a href="{{ url_for('remove_song_from_playlist', playlist_id=playlist.id, song_id=song.id) }}"
+                            class="btn btn-danger btn-sm float-right">Remove</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No songs in this playlist.</p>
+    {% endif %}
+
+   
+
+</body>
+
+</html>

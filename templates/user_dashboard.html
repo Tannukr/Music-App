@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Music App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* background-color: #f2f2f2; */
+            background-image: url('{{ url_for("static", filename="music.jpg") }}');
+            background-attachment: fixed;
+            background-size: 100% 100%;
+
+             
+            background-repeat: no-repeat;
+            /* background-position: center center; */
+            font-family: Arial, sans-serif;
+        }
+
+        /* Update this selector to the specific container where you want the background image */
+        .container-fluid {
+            
+            background-size: cover;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar {
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-nav .nav-item {
+            margin-right: 100px;
+            list-style: none;
+        }
+
+        .btn.btn-outline-success {
+            color: black;
+        }
+
+        /* .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: pink;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        } */
+
+        /* .form-container h1 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        } */
+
+        .btn-green {
+            background-color: blue;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .btn-green:hover {
+            background-color: rgb(0, 23, 100);
+        }
+
+        .form-group.input-container {
+            text-align: center;
+        }
+
+        .navbar {
+            background-color: rgb(0, 6, 128);
+            padding: 4px 0;
+        }
+
+        .navbar a {
+            color: #fff;
+        }
+
+        .container {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            width: 200px;
+            margin: 10px;
+        }
+
+        /* .card-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: rgb(0, 64, 128);
+        }
+
+        .card-text {
+            text-align: center;
+        }
+
+        .btn-warning {
+            background-color: #006aff;
+            color: #fff;
+        } */
+
+        h5 {
+            text-align: center;
+            margin-top: 20px;
+            color: black;
+        }
+
+        a.link-offset-2 {
+            color: white;
+            text-decoration: none;
+        }
+
+        a.link-offset-2:hover {
+            text-decoration: underline;
+        }
+        .welcome-message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+            color: white;
+        } 
+
+        .recommended-tracks-title {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white; /* Change the color to your desired color */
+        }
+
+        .playlist-title {
+            text-align: center;
+            margin-top: 20px;
+           font-size: 20px;
+           font-weight: bold;
+           color: black; /* Change the color to your desired color */
+        }
+        .song-card:nth-child(n+3) {
+            display: none;
+        }
+
+       #show-more-btn {
+       margin-top: 20px;
+       }
+       /* .song-card {
+            border: 1px solid pink;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 10px;
+            background-color: rgb(0, 64, 128);
+            box-shadow: 0 4px 8px ;
+            transition: box-shadow 0.3s;
+        } */
+        .song-card:hover {
+            box-shadow: 0 8px 16pxrgb(109, 0, 128);
+        }
+        .song-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: rgb(109, 0, 128); /* Dark green */
+            margin-bottom: 5px;
+        } 
+        .singer {
+            font-size: 14px;
+            color: #008000; /* Medium green */
+            margin-bottom: 5px;
+        }
+        .release-date {
+            font-size: 12px;
+            color: #006400; /* Dark green */
+            margin-bottom: 5px;
+        }
+        .playlist-card {
+            color: black; /* Change the color to your desired color */
+            border-radius: 8px;
+            margin: 10px;
+            padding: 10px;
+            background-color: rgb(0, 64, 128); /* Set the background color to white */
+            box-shadow: 0 4px 8px rgb(109, 0, 128);
+           transition: box-shadow 0.3s;
+        }
+        .playlist-title2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: rgb(109, 0, 128); /* Change the color to your desired color */
+            margin-bottom: 5px;
+        }
+        .playlist-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .playlist-title {
+            font-size: 20px;
+            font-weight: bold;
+            color:white; /* Change the color to your desired color */
+            margin-bottom: 5px;
+        }
+        
+        .create-playlist-link {
+            color: white;
+            text-decoration: none;
+            margin-top: 10px;
+            display: inline-block;
+            font-size: 16px;
+        }
+
+        .create-playlist-link:hover {
+            text-decoration: underline;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"> 
+                    <!-- <a class="nav-link active" aria-current="page" href='{{url_for('user_homepage')}}'>Profile</a>  -->
+                    <!-- <a class="nav-link active" aria-current="page" href="{{ url_for("user_dashboard") }}">Profile</a> -->
+
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href='{{url_for('creator_dashboard')}}'>Creator Account</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href='{{url_for('logout')}}'>Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href='{{url_for('user_homepage')}}'>Profile</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href='{{url_for('creator_login')}}'>Registe As Creator</a>
+                </li> -->
+            </ul>
+            
+            <form action="{{ url_for('search') }}" method="GET" class="form-inline my-2 my-lg-0 d-flex align-items-center">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="query">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            
+            
+        </div>
+    </nav>
+    <h4 class="welcome-message">Welcome {{ user.username }}</h4>
+    <h5 class="recommended-tracks-title">Recommended Tracks</h5>
+    <a class="link-offset-2" href='{{url_for('show_more')}}'>Show More</a>
+    
+    <!-- <ul>
+        {% for song in songs[0:2] %}
+            <li>
+                <div class="song-card">
+                    <a href="{{ url_for('lyrics', id=song.id) }}" class="song-title">{{ song.title }}</a>
+                    <p class="singer">By {{ song.singer }}</p>
+                    {% if avg_ratings[song.id] %}
+                         Ratings {{ avg_ratings[song.id] }}
+                    {% else %}
+                        (Not rated yet)
+                    {% endif %}
+                </div>
+            </li>
+        {% endfor %}
+    </ul> -->
+    <div class="container">
+        {% for song in songs[0:4] %}
+            <div class="card col-md-4"> <!-- Use col-md-4 to display 3 cards in one row on medium screens -->
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                    <img src="{{ song.image_url }}" class="card-img-top" alt="Song Image">
+                    <a href="{{ url_for('lyrics', id=song.id) }}" class="song-title">{{ song.title }}</a>
+                    <p class="singer">By {{ song.singer }}</p>
+                    {% if avg_ratings[song.id] %}
+                        Ratings {{ avg_ratings[song.id] }}
+                    {% else %}
+                        (Not rated yet)
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+    <h5 class="playlist-title">Your Playlist</h5>
+    <a href="{{ url_for('create_playlist_user') }}" class="create-playlist-link">Create Playlist</a>
+
+    <!-- <ul>
+        {% for playlist in playlists %}
+            <li>
+                <div class="playlist-card">
+                    <a href="{{ url_for('playlist_details', playlist_id=playlist.id) }}" class="playlist-title2">{{ playlist.name }}</a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul> -->
+    <div class="container">
+        
+        <div class="container">
+            {% for playlist in playlists[0:4] %}
+                <div class="card col-md-4">
+                    <div class="card-body">
+                        <img src="{{ playlist.image_url }}" class="card-img-top" alt="song Image">
+                        <a href="{{ url_for('playlist_details', playlist_id=playlist.id) }}" class="playlist-title2">{{ playlist.name }}</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        
+    </div>
+    
+    <h5 class="playlist-title">Genre</h5>
+    <div class="container">
+    
+        {% for song in songs [0:2]%}
+                <div class="card col-md-4">
+                    <!-- <img src="..." class="card-img-top" alt="..."> -->
+                    <h3>{{ song.genre }}</h3>
+                    <a href="{{ url_for('lyrics', id=song.id) }}" class="song-title">{{ song.title }}</a>
+                    <p class="singer">By {{ song.singer }}</p>
+                    {% if avg_ratings[song.id] %}
+                        Ratings {{ avg_ratings[song.id] }}
+                    {% else %}
+                        (Not rated yet)
+                    {% endif %}
+                </div>
+            
+        {% endfor %}
+    </div>
+
+
+
+
+    
+
+
+
+</body>
+
+</html>

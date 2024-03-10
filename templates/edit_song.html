@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        /* body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        } */
+
+        .form-floating {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-floating label {
+            color: green;
+        }
+
+        .form-floating input[type="text"],
+        .form-floating input[type="date"] {
+            border: 1px solid green;
+            border-radius: 5px;
+            color: green;
+        }
+
+        .form-floating input[type="text"]:focus,
+        .form-floating input[type="date"]:focus {
+            border-color: darkgreen;
+        }
+
+        .navbar {
+            background-color: green;
+        }
+
+        .navbar-nav {
+            justify-content: flex-end;
+        }
+
+        .nav-item {
+            margin-top: 0px;
+            margin-right: 20px;
+        }
+
+        .nav-link {
+            color: green;
+        }
+
+        .nav-link:hover {
+            color: darkgreen;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light w-100">
+        <span class="navbar-text">Creator Account</span>
+        <ul class="navbar-nav ml-auto">
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="#">Upload Song</a>
+            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for("album")}}">User Account</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for("logout")}}">Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <form action="{{ url_for('edit_song', song_id=song.id) }}" method="POST">
+        <div class="form-floating mb-3">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Title" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="singer">Singer</label>
+            <input type="text" class="form-control" id="singer" name="singer" placeholder="Name" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="date">Release Date</label>
+            <input type="date" class="form-control" id="date" name="releasedate" placeholder="Date" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="lyrics">Lyrics</label>
+            <input type="text"  class="form-control" name="lyrics" placeholder="Lyrics" required>
+        </div>
+        <div class="form-floating mb-3">
+            <label for="genre">Genre</label>
+            <input type="text"  class="form-control" name="genre" placeholder="Genre" required>
+        </div>
+        <div class="form-group input-container">
+            <input type="submit" style="padding: 10px 20px; margin-top: 30px; margin-left: 600px; color: green; background-color: lightgreen; border-radius: 5px; text-decoration: none;" value="Update">
+        </div>
+    </form>
+    
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music App</title>
+    <!-- Bootstrap CSS Link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        .navbar {
+            background-color:  rgb(0, 6, 128);;
+        }
+
+        .navbar-nav {
+            justify-content: flex-end;
+        }
+
+        .nav-item {
+            margin-top: 0px;
+            margin-right: 20px;
+        }
+
+        .nav-link {
+            color: green;
+        }
+
+        .nav-link:hover {
+            color: darkgreen;
+        }
+
+        h4 {
+            margin-top: 20px;
+            margin-left: 80px;
+            padding: 15px;
+        }
+
+        .centered-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 200px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <span class="navbar-text">Creator Account</span>
+        <ul class="navbar-nav ml-auto">
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="{{url_for('upload_song')}}">Upload Song</a>
+            </li> -->
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="{{url_for('user_dashboard')}}">User Account</a>
+            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for("logout")}}">Logout</a>
+            </li>
+            
+        </ul>
+    </nav>
+
+    <div class="centered-container">
+        <h3 style="color: green; font-weight: 200;">Kickstart Your Creator Journey
+            Start With Uploading Songs
+        </h3>
+        <a style="padding: 10px 20px;  margin-top: 30px; color: white; background-color: rgb(0, 6, 128); border-radius: 5px; text-decoration: none;" href='{{ url_for('creator_login') }}'>Register As Creator</a>
+    </div>
+
+</body>
+
+</html>

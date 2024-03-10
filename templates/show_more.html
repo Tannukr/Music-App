@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f2f2f2;
+            
+            background-repeat: no-repeat;
+            background-position: center center;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Update this selector to the specific container where you want the background image */
+        .container-fluid {
+            
+            background-size: cover;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Your existing styles */
+                  /* Your existing styles */
+
+        .navbar {
+            background-color: green;
+            padding: 10px 0;
+        }
+
+        .navbar a {
+            color: #fff;
+        }
+
+
+        h4.welcome-message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+            color: green; /* Text color in the welcome message */
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+       a {
+        text-decoration: none;
+        color: #4CAF50; /* Green color for links */
+        font-weight: bold;
+       }
+
+       a:hover {
+        text-decoration: underline;
+       }
+
+       p {
+        text-align: center;
+        margin-top: 20px;
+        color: #555;
+       }
+
+       #show-more-btn {
+    margin-top: 20px;
+    }
+    .song-card {
+         border: 1px solid #ddd;
+         border-radius: 8px;
+         margin: 10px;
+         padding: 10px;
+         background-color: #fff;
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+         transition: box-shadow 0.3s;
+     }
+     .song-card:hover {
+         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+     }
+     .song-title {
+         font-size: 18px;
+         font-weight: bold;
+         color: #006400; /* Dark green */
+         margin-bottom: 5px;
+     } 
+     .singer {
+         font-size: 14px;
+         color: #008000; /* Medium green */
+         margin-bottom: 5px;
+     }
+     .release-date {
+         font-size: 12px;
+         color: #006400; /* Dark green */
+         margin-bottom: 5px;
+     }
+      
+      
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"> 
+                    <!-- <a class="nav-link active" aria-current="page" href='{{url_for('user_homepage')}}'>Profile</a>  -->
+                    <!-- <a class="nav-link active" aria-current="page" href="{{ url_for("user_dashboard") }}">Profile</a> -->
+
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href='{{url_for('user_homepage')}}'>Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href='{{url_for('logout')}}'>Logout</a>
+                </li>
+            </ul>
+            <!-- <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form> -->
+            <form action="{{ url_for('search') }}" method="GET" class="form-inline my-2 my-lg-0 d-flex align-items-center">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="query">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            
+            
+        </div>
+    </nav>
+    <h4 class="welcome-message">Welcome {{ user.username }}</h4>
+</head>
+<body>
+    <ul>
+        {% for song in songs %}
+        <li>
+            <div class="song-card">
+                <a href="{{ url_for('lyrics', id=song.id) }}" class="song-title">{{ song.title }}</a>
+                <p class="singer">By {{ song.singer }}</p>
+                
+                <!-- Add more details as needed -->
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+

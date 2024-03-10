@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa; /* Light gray background */
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: green;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            margin-left: 20px; /* Adjust the spacing between navigation items */
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        h1 {
+            color: #343a40; /* Dark gray text color */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6; /* Light gray border color */
+        }
+
+        th {
+            background-color: green; /* Blue header background color */
+            color: white;
+        }
+
+        tbody tr:hover {
+            background-color: #f0f8ff; /* Light blue background on hover */
+        }
+
+        form {
+            display: inline-block; /* Align buttons in the same row */
+        }
+
+        button {
+            padding: 6px 12px;
+            font-size: 14px;
+            margin: 0;
+            cursor: pointer;
+            background-color: green; /* Red delete button background color */
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #bd2130; /* Darker red on hover */
+        }
+
+        p {
+            color: #6c757d; /* Medium gray text color */
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <h3 style="color: white;">Administrator Dashboard</h3>
+        <a href="{{ url_for('index') }}">Logout</a>
+        <a href="{{url_for("admin_album")}}">Albums</a>
+        <a href="{{url_for('tracks')}}">Tracks</a>
+    </nav>
+
+    <div class="container">
+        <h1>All Creators</h1>
+
+        {% if all_creators %}
+        <!-- Existing Table for All Creators -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Creator ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Blacklisted</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for creator in all_creators %}
+                <tr>
+                    <td>{{ creator.id }}</td>
+                    <td>{{ creator.username }}</td>
+                    <td>{{ creator.email }}</td>
+                    <td>{{ 'Yes' if creator.is_blacklisted else 'No' }}</td>
+                    <td>
+                        <form method="post" action="{{ url_for('all_creator') }}">
+                            <!-- Include other form fields if needed -->
+                            <input type="hidden" name="creator_id" value="{{ creator.id }}">
+                            <input type="hidden" name="action" value="blacklist">
+                            <button type="submit">Blacklist</button>
+                        </form>
+                        
+                        <form method="post" action="{{ url_for('all_creator') }}">
+                            <!-- Include other form fields if needed -->
+                            <input type="hidden" name="creator_id" value="{{ creator.id }}">
+                            <input type="hidden" name="action" value="whitelist">
+                            <button type="submit">Whitelist</button>
+                        </form>
+                        
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- New Section for Blacklisted Users -->
+        <!-- <h1>Blacklisted Creators</h1>
+        {% if blacklisted_creators %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Creator ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for creator in blacklisted_creators %}
+                <tr>
+                    <td>{{ creator.id }}</td>
+                    <td>{{ creator.username }}</td>
+                    <td>{{ creator.email }}</td>
+                    <td>
+                        <form method="post" action="{{ url_for('admin_dashboard') }}">
+                            <input type="hidden" name="whitelist_creator_id" value="{{ creator.id }}">
+                            <button type="submit" class="btn btn-success">Whitelist</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No blacklisted creators found.</p>
+        {% endif %}
+        {% else %}
+        <p>No creators found.</p>
+        {% endif %}
+
+    </div> -->
+
+</body>
+
+</html>

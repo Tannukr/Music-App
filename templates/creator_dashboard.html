@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0; /* Remove default margin */
+            background-color: #f8f9fa; /* Set a light background color */
+        }
+
+        .form-floating {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-floating label {
+            color: green;
+        }
+
+        .form-floating input[type="text"],
+        .form-floating input[type="date"] {
+            border: 1px solid green;
+            border-radius: 5px;
+            color: green;
+        }
+
+        .form-floating input[type="text"]:focus,
+        .form-floating input[type="date"]:focus {
+            border-color: darkgreen;
+        }
+
+        .navbar {
+            background-color: green;
+            margin-bottom: 20px;
+        }
+
+        .navbar-text {
+            color: white;
+            margin-right: 20px;
+        }
+
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-item {
+            margin-top: 0px;
+            margin-right: 20px;
+        }
+
+        .nav-link {
+            color: white;
+        }
+
+        .nav-link:hover {
+            color: darkgreen;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .card {
+            border: 1px solid darkgreen;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .song-list,
+        .album-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .song-card,
+        .album-card {
+            background-color: lightgreen;
+            border: 1px solid darkgreen;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+
+        .song-title,
+        .album-title {
+            color: darkgreen;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .song-title:hover,
+        .album-title:hover {
+            text-decoration: underline;
+        }
+
+        .ratings {
+            color: darkgreen;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <span class="navbar-text">Creator Account</span>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for("upload_song")}}">Upload Song</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for("album")}}">Album</a>
+            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="{{url_for("user_dashboard")}}">User Account</a>
+            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for("logout")}}">Logout</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container mt-4">
+        <div class="card">
+            <p>Total Songs Uploaded: {{ num_uploaded_songs }}</p>
+            <p>Total Albums Uploaded: {{ num_uploaded_albums }}</p>
+            <p>Average Rating of Songs: {{ avg_rating }}</p>
+        </div>
+        <ul class="song-list">
+            {% for song in songs %}
+                <li>
+                    <div class="song-card">
+                        <a href="{{ url_for('songs', id=song.id) }}" class="song-title">{{ song.title }}</a>
+                        {% if avg_rating[song.id] %}
+                            <p class="ratings">Ratings: {{ avg_rating[song.id] }}</p>
+                        {% endif %}
+                        <form method="post" action="{{ url_for('delete_song', song_id=song.id) }}" class="delete-form">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                        <!-- Assuming you have a loop to display the songs -->
+                        <p>
+                        <a href="{{ url_for('edit_song', song_id=song.id) }}">Edit</a>
+                        </p>
+                        
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <h3>Uploaded Albums</h3>
+        <ul class="album-list">
+            {% for album in albums %}
+                <li>
+                    <div class="album-card">
+                        
+                        <a href="{{ url_for('albumpage', album_id=album.id) }}" class="album-title">{{ album.name }}</a>
+
+
+
+
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+
+</html>

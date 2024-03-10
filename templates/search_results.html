@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Music App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f2f2f2;
+            background-repeat: no-repeat;
+            background-position: center center;
+            font-family: Arial, sans-serif;
+        }
+
+        .container-fluid {
+            padding: 7px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar {
+            background-color: green;
+            padding: 10px 0;
+        }
+
+        .navbar a {
+            color: #fff;
+        }
+
+        h4.welcome-message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+            color: green;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 20px;
+            color: #555;
+        }
+        .album-container {
+            margin-top: 20px;
+        }
+
+        .album-title {
+            color: green;
+        }
+
+        .album-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .album-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .album-song {
+            width: 200px; /* Adjust the width as needed */
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <!-- <a class="nav-link active" aria-current="page" href='{{url_for('user_homepage')}}'>Profile</a>  -->
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href='{{url_for('user_homepage')}}'>Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href='{{url_for('logout')}}'>Logout</a>
+                </li>
+            </ul>
+
+            <form action="{{ url_for('search') }}" method="GET"
+                class="form-inline my-2 my-lg-0 d-flex align-items-center">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="query">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    <h4 class="welcome-message">Welcome {{ user.username }}</h4>
+
+    {% if playlists_results %}
+        <h3>Your Playlists:</h3>
+        <ul>
+            {% for playlist in playlists_results %}
+                <li>
+                    <a href="{{ url_for('playlist_details', playlist_id=playlist.id) }}">{{ playlist.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if albums_results %}
+        <div class="album-container">
+            {% for album in albums_results %}
+                <h3 class="album-title">{{ album.name }}</h3>
+                <div class="album-content">
+                    {% for song in album.songs %}
+                        <div class="album-song">
+                            <div>
+                            <img src="{{ song.image_url }}" class="card-img-top" alt="Song Image">
+                            <a href="{{ url_for('lyrics', id=song.id) }}">{{ song.title }} by {{ song.singer }}</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if songs_results %}
+        <h3>Songs:</h3>
+        <ul>
+            {% for song in songs_results %}
+                <li>
+                    <a href="{{ url_for('lyrics', id=song.id) }}">{{ song.title }} by {{ song.singer }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if songs_results and playlists_results and albums_results %}
+        <h3>Genre:</h3>
+        <ul>
+            {% for song in songs_results %}
+                <li>
+                    <a href="{{ url_for('lyrics', id=song.id) }}">{{ song.genre }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if not songs_results and not playlists_results and not albums_results %}
+        <p>No results found.</p>
+    {% endif %}
+
+</body>
+
+</html>
